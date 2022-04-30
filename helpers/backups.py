@@ -21,7 +21,7 @@ def generate_archive(mount, save_dir):
     with tarfile.open(name, "x:xz") as tar:
         with click.progressbar(u.get_visible_children(mount)) as children:
             for child in children:
-                tar.add(os.path.join(mount, child), child, exclude=lambda x: x[0] == '.')
+                tar.add(os.path.join(mount, child), child, filter=lambda x: None if x.name[0] == '.' else x)
     print("backup created.")
 
 def restore_archive(file, mount):
